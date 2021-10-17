@@ -48,7 +48,18 @@ export default {
     resetLoginForm () {
       this.$refs.loginFormRef.resetFields()
     },
-    login () {}
+    login () {
+      this.$axios.post('/login', {}).then(res => {
+        if (res.data.status === 200 || res.data.status === '200') {
+          this.$router.push('/home')
+        } else {
+          this.$message.error(res.data.msg)
+          console.error('Wrong Password')
+        }
+      }).catch(err => {
+        console.log(`Network Error:${err.toString()}`)
+      })
+    }
   }
 }
 </script>
